@@ -36,6 +36,10 @@ sudo systemctl restart apache2
   ```
   cd /var/www/html/
   sudo wget https://github.com/omeka/Omeka/archive/refs/tags/v3.1.1.tar.gz
+  apt install unzip
+  ls
+  unzip omeka-3.1.zip
+  mv omeka-3.1 omeka
   ```
 
 ## 4. Create an Omeka database and login on your VM
@@ -55,5 +59,43 @@ show databases;
 exit
 ```
 
+## 5. Go into your omeka directory and add your database credentials.
+Change to the omeka directory and open db.ini with nano.
 
+```
+cd omeka
+ls
+nano db.ini
+```
 
+In the database configuration file, change all the fields marked "XXXXXX" to contain your content. Here is what my db.ini looked like when I was done. 
+
+```
+[database]
+host     = "localhost"
+username = "omeka"
+password = "XXXXXXX"
+dbname   = "omeka"
+prefix   = "omeka_"
+charset  = "utf8"
+;port     = ""
+```
+
+## 6. Change file ownership
+
+```
+sudo chown -R www-data:www-data *
+```
+
+## 7. Restart Apache and MySQL
+```
+sudo systemctl restart apache2
+sudo systemctl restart mysql
+```
+
+## 8. Go to your web browser and use your VM's external IP address to open Omeka
+```
+11.222.111.22/omeka/
+```
+
+Once you're there, you'll be prompted to install Omeka just as you were to install Wordpress. 
